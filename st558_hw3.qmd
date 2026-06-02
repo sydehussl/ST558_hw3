@@ -4,6 +4,68 @@ format:
   html:
     toc: true
     theme: cosmo
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## Task 1: Conceptual Questions
+
+1.  If your working directory is `myfolder/homework/`, what relative path would you specify to get the file located at `myfolder/MyData.csv`?
+
+-   The relative path would be `"../MyData.csv"`. The `..` tells R to move up one level out of the current folder `homework/` and into the parent folder `myfolder/`.
+
+2.  What are the major benefits of using R projects?
+
+-   R Projects improve organization, reproducibility, collaboration, and file management
+
+3.  What is Git and what is GitHub?
+
+-   **Git** is a version control system that tracks changes to files over time. It allows you to:
+
+    -   Save snapshots of your work (commits)
+
+    -   View the history of changes
+
+    -   Revert to previous versions if something goes wrong
+
+    -   Work on different features independently using branches
+
+    -   Merge changes from multiple contributors
+
+-   **GitHub** is a cloud-based platform that hosts Git repositories online. It allows you to:
+
+    -   Store and back up your Git repositories
+
+    -   Collaborate with others on projects
+
+    -   Share code publicly or privately
+
+    -   Review changes through pull requests
+
+    -   Track issues and manage projects
+
+4.  What are the two main differences between a `tibble` and a `data.frame`?
+
+-   A tibble is a modern version of a data frame that displays data more cleanly by only showing the first few rows and columns, along with each column's data type. Tibbles also preserve their structure when subsetting, whereas data frames may simplify the result to a vector when a single column is selected.
+
+5.  Rewrite the following nested function call using baseR's chaining operator:
+
+```{r}
+library(tidyverse)
+arrange(filter(select(as_tibble(iris), starts_with("Petal"), Species), Petal.Length < 1.55), Species)
+```
+
+```{r}
+iris |>
+  as_tibble() |>
+  select(starts_with("Petal"), Species) |>
+  filter(Petal.Length < 1.55) |>
+  arrange(Species)
+```
+
+6.  What is meant by long format data and wide format data? Which do we generally prefer for statistical analysis?
+
+-   Long format data has multiple rows for a single entity, with one column holding variable names and another holding the values. Wide format data has all variables and repeated measurements for a single entity spread across a single row. For most statistical analyses, we generally prefer long format data because it is easier to work with and is compatible with many statistical modeling and visualization functions.
+
+# Task 2 Reading Delimited Data
+
