@@ -9,3 +9,33 @@ format:
 ## Chris's Version
 
 ## Task 1: Conceptual Questions
+
+1. You should specify the path: `"../MyData.csv"`
+2. Using R projects increases the **"portability"** of your work by keeping necessary files in a common directory.
+3. Git is a **version control protocol**, GitHub is a **service that hosts Git repositories**
+4. Tibbles **print nicer** than data frames and do not **simplify into a vector** when a single column is referenced
+5. Here's the same code with chaining:
+```{r}
+library(tidyverse)
+
+as_tibble(iris) |>
+  select(starts_with("Petal"), Species) |>
+  filter(Petal.Length < 1.55) |>
+  arrange(Species) |>
+  head()
+```
+6. Long format data contains a single observation per row, while wide format data contains multiple observations within the same row. We prefer long format data because it's easier to work with.
+
+## Task 2: Reading Delimited Data
+
+```{r}
+glass <- read_csv("https://www4.stat.ncsu.edu/online/datasets/glass.data",
+                  col.names = c("id", "ri", "na", "mg", "al", "si", "k", "ca", "ba", "fe", "type")) |>
+         as_tibble()
+
+
+```
+
+
+
+
