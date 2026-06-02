@@ -1,0 +1,31 @@
+---
+title: "hw3"
+format: html
+editor: visual
+---
+
+## Task 1 conceptual questions
+
+## Task 2
+```{r}
+library(tidyverse)
+
+glass_data <- read.csv("https://www4.stat.ncsu.edu/online/datasets/glass.data", 
+col.names = c("Id", "RI", "Na", "Mg", "Al", "Si", "K", "Ca", "Ba", "Fe", "Type"))
+  
+glass_data <-as_tibble(glass_data) |>
+mutate(Type = factor(Type, levels = 1:7,
+                       labels = c("building_windows_float_processed",
+                                  "building_windows_non_float_processed",
+                                  "vehicle_windows_float_processed",
+                                  "vehicle_windows_non_float_processed",
+                                  "containers",
+                                  "tableware",
+                                  "headlamps"))) |>
+           filter(Fe == "<0.2") |>
+           filter(Type == "tableware", Type == "headlamp")
+    
+glass_data
+    
+```
+
