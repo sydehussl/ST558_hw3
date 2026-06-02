@@ -22,8 +22,8 @@ mutate(Type = factor(Type, levels = 1:7,
                                   "containers",
                                   "tableware",
                                   "headlamps"))) |>
-           filter(Fe == "<0.2") |>
-           filter(Type == "tableware", Type == "headlamp")
+           filter(Fe < 0.2) |>
+  filter(Type == "tableware" | Type == "headlamps")
     
 glass_data
     
