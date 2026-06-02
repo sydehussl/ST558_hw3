@@ -13,10 +13,13 @@ format:
 1. You should specify the path: `"../MyData.csv"`
 2. Using R projects increases the **"portability"** of your work by keeping necessary files in a common directory.
 3. Git is a **version control protocol**, GitHub is a **service that hosts Git repositories**
-4. Tibbles **print nicer** than data frames and do not **simplify into a vector** when a single column is referenced
+4. Tibbles:
+   1) **Print nicer** than data frames
+   2) Do not **simplify to a vector** when a single column is referenced
 5. Here's the same code with chaining:
 ```{r}
-library(tidyverse)
+# shut up tidyverse
+suppressMessages(library(tidyverse))
 
 as_tibble(iris) |>
   select(starts_with("Petal"), Species) |>
@@ -24,18 +27,217 @@ as_tibble(iris) |>
   arrange(Species) |>
   head()
 ```
-6. Long format data contains a single observation per row, while wide format data contains multiple observations within the same row. We prefer long format data because it's easier to work with.
+6. Long format data contains a single observation per row, while wide format data contains multiple observations within the same row. We prefer long format (tidy) data because the analysis tools we use are designed for it.
 
 ## Task 2: Reading Delimited Data
 
+### Glass Data
+
+We'll start by reading in the `glass.csv` file:
 ```{r}
+glass_names <- c("id", "ri", "na", "mg", "al", "si", "k", "ca", "ba", "fe", "type")
+
 glass <- read_csv("https://www4.stat.ncsu.edu/online/datasets/glass.data",
-                  col.names = c("id", "ri", "na", "mg", "al", "si", "k", "ca", "ba", "fe", "type")) |>
-         as_tibble()
+                  col_names = glass_names,
+                  show_col_types = FALSE)
 
-
+glass
 ```
 
+Our tibble looks good, but we need to recode our `type` variable.
 
+I wanted to use a switch statement to recode the levels, but those don't work inside of `mutate` for some reason. I found `case_match` in the `dplyr` documentation as a vectorized alternative so we're using it here.
+```{r}
+glass |>
+  mutate(glass, type = case_match(type, 1 ~ "building_windows_float_processed",
+                                        2 ~ "building_windows_non_float_processed",
+                                        3 ~ "vehicle_windows_float_processsed",
+                                        4 ~ "vehicle_windows_non_float_processed",
+                                        5 ~ "containers",
+                                        6 ~ "tableware",
+                                        7 ~ "headlamps") |>
+                              as.factor()) |>
+                filter(fe < 0.2, type %in% c("tableware", "headlamps"))
+```
 
+### Yeast Data
 
+Start by reading in the fixed-width data as shown in the video:
+```{r}
+yeast_names <- c("seq_name", "meg", "gvh", "alm", "mit", "erl", "pox", "vac", "nuc", "class")
+
+yeast <- read_fwf("https://www4.stat.ncsu.edu/online/datasets/yeast.data",
+                  col_positions = fwf_widths(c(12, 6, 6, 6, 6, 6, 6, 6, 6, 3),
+                                             col_names = yeast_names),
+                  show_col_types = FALSE)
+
+yeast
+```
+
+Now we can subset the columns and create the summaries. I'm barely changing the code from the video:
+```{r}
+yeast_sub <- yeast |>
+              select(-c("seq_name", "nuc")) |>
+              group_by(class) |>
+              mutate(across(where(is.numeric), list(mean = mean, median = median),
+                            .names = "{.col}_{.fn}"))
+
+yeast_sub
+```
+
+Great, we have our summary columns for each variable grouped by the class.
+
+## Task 3: Joining Data
+
+We start by importing the wine data from the first sheet of the excel workbook we're provided:
+```{r}
+library(readxl)
+
+white_wine <- read_xlsx("white-wine.xlsx",
+                        sheet = 1)
+
+white_wine
+```
+
+We don't want variable names with spaces in them. Let's pull better names from the second sheet and replace these weird ones.
+
+```{r}
+wine_names <- read_xlsx("white-wine.xlsx",
+                        sheet = 2) |>
+              pull()
+
+colnames(white_wine) <- wine_names
+
+white_wine
+```
+
+Great! We just need to add the type of wine to each observation:
+
+```{r}
+white_wine$type <- "White"
+
+# preview
+white_wine[,10:13]
+```
+
+Now that the white wine data is complete, we can turn our attention to the reds:
+```{r}
+red_wine <- read_delim("https://www4.stat.ncsu.edu/~online/datasets/red-wine.csv",
+                       skip = 1,
+                       delim = ";",
+                       col_names = wine_names)
+
+red_wine$type <- "red"
+
+red_wine
+```
+
+Perfect! With the correct column types and names, it's easy to merge our two data sets:
+
+```{r}
+wine <- bind_rows(white_wine, red_wine)
+
+wine
+```
+
+Lastly, we'll make a pipeline using the combined data set:
+```{r}
+wine |>
+  filter(quality > 6.5, alcohol < 132) |> # only 6.5+ quality, less than 132 alcohol
+  arrange(desc(quality)) |>                         # arrange in desc quality order
+  select(contains("acid"), alcohol, type, quality) |>      # subset columns
+  group_by(quality) |>                                    # group by quality
+  mutate(across(alcohol, list(mean = mean, sd = sd),    # add alcohol mean/sd columns
+                .names = "{.fn}_alcohol"))
+```
+
+## Task 4: Database Practice
+
+Connecting to the `lahman` database is quite easy:
+```{r}
+library(DBI)
+
+lahman <- dbConnect(RSQLite::SQLite(), "lahman.db")
+
+dbListTables(lahman)
+```
+There are a lot of tables within this database!
+
+We start by querying the `Teams` table and returning observations from the year 2015:
+```{r}
+data_2015 <- tbl(lahman, "Teams") |>
+               filter(yearID == 2015) |>
+               collect()
+
+data_2015
+```
+
+We can do the same thing using SQL commands instead:
+
+```{r}
+data_2015_frmsql <- tbl(lahman, sql(
+                        "SELECT *
+                           FROM `Teams`
+                           WHERE (`yearID` = 2015)"
+                        )) |>
+                    collect()
+
+data_2015_frmsql
+```
+This is the same table from above, so it looks like I still remember how to write SQL! I'm going to use the dplyr workflow going forward because I'm more comfortable with it.
+
+### Hall of Fame Players
+Here we're taking a look at the `HallOfFame` table and doing some wrangling:
+```{r}
+hof <- tbl(lahman, "HallOfFame") |>
+         filter(inducted == "Y") |>
+         select(playerID, yearID, category) |>
+         collect()
+
+hof
+```
+
+Next, we use the `playerID` key variable to left join the `hof` and `people` data sets so we have the first and last name for each player.
+```{r}
+people <- tbl(lahman, "People") |>
+            select(playerID, nameFirst, nameLast) |>
+            collect()
+
+hof <- left_join(hof, people) |>
+       select(nameFirst, nameLast, playerID, yearID, category)
+
+hof
+```
+
+### Manager Statistics
+
+We're now focusing our attention on the `Managers` table:
+```{r}
+mgrs <- tbl(lahman, "Managers") |>
+        select(playerID, G, W, L) |>
+        group_by(playerID) |>
+        summarize(G_managed = sum(G, na.rm = TRUE),
+                  Total_W = sum(W, na.rm = TRUE),
+                  Total_L = sum(L, na.rm = TRUE)) |>
+        collect() |>
+        mutate(career_wl = Total_W/G_managed) |>
+        arrange(desc(career_wl))
+
+mgrs
+```
+
+Unsurprisingly, the highest career win/loss stats are held by managers who managed a few games to victory.
+
+Lastly, we join the `hof` and `mgrs` tables by `playerID` to return all Hall of Fame members who managed games at some point in their career. I'm also reordering the columns so the order is more useful.
+```{r}
+hof_mgrs <- inner_join(mgrs, hof) |>
+            select(playerID, nameFirst, nameLast, yearID,
+                   category, G_managed, Total_W, Total_L, career_wl)
+
+# be a good egg and close the db connection
+dbDisconnect(lahman)
+
+hof_mgrs
+```
+
+Great! This table contains every person inducted into the Hall of Fame who managed at least one game.
