@@ -1,0 +1,9 @@
+---
+title: "ST 558 Homework 3"
+format:
+  html:
+    toc: true
+    theme: cosmo
+---
+
+## Task 1: Conceptual Questions
