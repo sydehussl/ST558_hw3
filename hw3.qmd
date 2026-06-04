@@ -6,14 +6,22 @@ editor: visual
 
 ## Task 1 conceptual questions
 
+1.  If your working directory is myfolder/homework/, what relative path would you specify to get the file located at myfolder/MyData.csv? **I would set my working directory to a location with the csv file. Then use the read.csv code with "MyData"**
+2.  What are the major benefits of using R projects? **The major benefits of using R projects are: 1) reproducibility of code for a specific project, 2) ability to share code/project with collaborators, and 3) ability to create and share via Github**
+3.  What is Git and what is GitHub? **Git is open-source filing system to upload files on Github. Github is the actual repository, from what I gather, that allows a user to track changes to files/code. It is a way to collaborate with colleagues on a shared project. Github also allows you to interface with R and save your projects (much like a cloud server). This is also important for transparency in project work flows**
+4.  What are the two main differences between a tibble and a data.frame? **A data frame consists of data in rows and columns while a tibble is a dataframe that can store more data for the tidyverse package. Tibbles are also easier to manipulate.**
+5.  Rewrite the following nested function call using baseR’s chaining operator: library(tidyverse) arrange(filter(select(as_tibble(iris), starts_with("Petal"), Species), Petal.Length \< 1.55), Species) **library(tidyverse) iris \|\> as_tibble() \|\> select(starts_with("Petal"), Species) \|\> filter(Petal.Length \< 1.55) \|\> arrange(Species)**
+6.  What is meant by long format data and wide format data? Which do we generally prefer for statistical analysis? **Long format provides the data in 1 observation by row with each column as a variable. Wide format is different in that each observation has more than 1 column per variable. The example in the notes uses data by year in each column for a wider format while year is in each row per observation in the long format. Long format is the one mostly used in statistical analyses**
+
 ## Task 2
 
 ```{r}
 library(tidyverse)
-
+#opening glass dataset and adding column names
 glass_data <- read.csv("https://www4.stat.ncsu.edu/online/datasets/glass.data", 
 col.names = c("Id", "RI", "Na", "Mg", "Al", "Si", "K", "Ca", "Ba", "Fe", "Type"))
-  
+
+#making glass dataset a tibble and adding in a new column with labels from worksheet. Then adding filter to chain of data with Fe values over 0.2 that are tableware and headlamps  
 glass_data <-as_tibble(glass_data) |>
 mutate(Type = factor(Type, levels = 1:7,
                        labels = c("building_windows_float_processed",
@@ -25,43 +33,56 @@ mutate(Type = factor(Type, levels = 1:7,
                                   "headlamps"))) |>
            filter(Fe < 0.2) |>
   filter(Type == "tableware" | Type == "headlamps")
-  
+
+#taking a look at the new data 
 glass_data
     
-
+#loading up the yeast dataset and adding column names in the same way as above
 yeast_data <- read.table("https://www4.stat.ncsu.edu/online/datasets/yeast.data", col.names = c("seq_name", "mcg", "gvh", "alm", "mit", "erl", "pox", "vac", "nuc", "class"))
 
+#converting the yeast data to a tibble and selecting a subset of the data to work with. Adding to the chain a new numeric column that adds the mean values for the selected variables. 
 yeast_data <-as_tibble(yeast_data) |>
   select("mcg", "gvh", "alm", "mit", "erl", "pox", "vac", "class") |>
   mutate(across(where(is.numeric), mean, .names = "mean_{.col}"))
+
+#viewing newly created data
 yeast_data
 ```
 
 ## Task 3
+
 ```{r}
+#setting working directory to where I've downloaded the files needed for this task. This allows me to use relative paths to the data
 setwd("C:/Users/davenportjm/Documents/repos")
 library(readxl)
+#reading in the white wine data set from an Excel file and converting it to a tibble
 wine_data <- read_excel("white-wine.xlsx") 
 wine_data <-as_tibble(wine_data) 
 
+#Now reading in the 2nd sheet from the white data set and using those variable names from that 2nd sheet for the column names and adding white column in the new wine_data2 object 
 wine_data2 <- read_excel("white-wine.xlsx", sheet = excel_sheets("white-wine.xlsx")[2])
 
 colnames(wine_data) <-wine_data2[[1]] 
   wine_data <- wine_data |>
    mutate(type = "white")
-                
+ 
+#confirming the new dataset looks good                 
 wine_data
 
+#reading in the red wine data set from the ; delimited file and adding a column for red wine labels and making sure that the column names match the white wine data set
 library(readr)
 red_wine <- read_delim("red-wine.csv", delim = ";") |>
   mutate(type = "red")
 
 colnames(red_wine) <- wine_data2[[1]]
 
+#combining the 2 tibbles for the white and red wine datasets
 total_wine <- dplyr::bind_rows(wine_data, red_wine)
 
+#checking the new combined data set called total_wine!
 total_wine
 
+#creating a chain to filter data by quality and alcohol amount in descending order. Then selecting the columns that are of interest, then grouping by quality. Finally adding 2 new columns for mean and sd of alcohol for dataset. 
 total_wine_sub <-total_wine |>
   filter(quality > 6.5 & alcohol < 132) |>
   arrange(desc(quality)) |>
@@ -70,11 +91,13 @@ total_wine_sub <-total_wine |>
   mutate(mean_alcohol = mean(alcohol)) |>
   mutate(sd_alcohol = sd(alcohol))
 
+#final check of new data set
 total_wine_sub
 
 ```
 
 ## Task 4
+
 ```{r}
 install.packages("RSQLite")
 library(RSQLite)
@@ -123,4 +146,3 @@ Manage_hall <- inner_join(Hall_names, Managers, by = "playerID") |>
 Manage_hall
 
 ```
-
