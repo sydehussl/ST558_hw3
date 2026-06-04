@@ -74,3 +74,53 @@ total_wine_sub
 
 ```
 
+## Task 4
+```{r}
+install.packages("RSQLite")
+library(RSQLite)
+library(tidyverse)
+library(DBI)
+setwd("C:/Users/davenportjm/Documents/repos")
+con <- dbConnect(RSQLite::SQLite(), "lahman.db")
+
+dbListTables(con)
+
+
+tbl(con, "Teams")|>
+  filter(yearID == 2015) 
+
+#SQL attempt
+teams_2015 <- tbl(con, sql(
+  "SELECT yearID, teamID, lgID
+   FROM Teams
+   WHERE yearID = 2015"
+))
+
+HOF <- tbl(con, "HallofFame")|>
+ select(playerID, yearID, category) 
+
+Name <- tbl(con, "People") |>
+  select(playerID, nameFirst, nameLast)
+
+Hall_names <- left_join(HOF, Name, by = "playerID") |>
+  collect()
+
+Hall_names
+
+Managers <- tbl(con, "Managers") |>
+select(playerID, G, W, L)|>
+group_by(playerID) |>
+summarize(G_managed = sum(G, na.rm = TRUE),
+Total_W = sum(W, na.rm = TRUE),
+Total_L = sum(L, na.rm = TRUE)) |>
+  mutate(`Total_W/G_managed` = as.numeric(Total_W) / as.numeric(G_managed))  |> arrange(desc('Total_W/G_managed')) |>
+  collect()
+
+
+Manage_hall <- inner_join(Hall_names, Managers, by = "playerID") |>
+  collect()
+
+Manage_hall
+
+```
+
