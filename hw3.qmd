@@ -7,6 +7,7 @@ editor: visual
 ## Task 1 conceptual questions
 
 ## Task 2
+
 ```{r}
 library(tidyverse)
 
@@ -24,8 +25,52 @@ mutate(Type = factor(Type, levels = 1:7,
                                   "headlamps"))) |>
            filter(Fe < 0.2) |>
   filter(Type == "tableware" | Type == "headlamps")
-    
+  
 glass_data
     
+
+yeast_data <- read.table("https://www4.stat.ncsu.edu/online/datasets/yeast.data", col.names = c("seq_name", "mcg", "gvh", "alm", "mit", "erl", "pox", "vac", "nuc", "class"))
+
+yeast_data <-as_tibble(yeast_data) |>
+  select("mcg", "gvh", "alm", "mit", "erl", "pox", "vac", "class") |>
+  mutate(across(where(is.numeric), mean, .names = "mean_{.col}"))
+yeast_data
+```
+
+## Task 3
+```{r}
+setwd("C:/Users/davenportjm/Documents/repos")
+library(readxl)
+wine_data <- read_excel("white-wine.xlsx") 
+wine_data <-as_tibble(wine_data) 
+
+wine_data2 <- read_excel("white-wine.xlsx", sheet = excel_sheets("white-wine.xlsx")[2])
+
+colnames(wine_data) <-wine_data2[[1]] 
+  wine_data <- wine_data |>
+   mutate(type = "white")
+                
+wine_data
+
+library(readr)
+red_wine <- read_delim("red-wine.csv", delim = ";") |>
+  mutate(type = "red")
+
+colnames(red_wine) <- wine_data2[[1]]
+
+total_wine <- dplyr::bind_rows(wine_data, red_wine)
+
+total_wine
+
+total_wine_sub <-total_wine |>
+  filter(quality > 6.5 & alcohol < 132) |>
+  arrange(desc(quality)) |>
+  select(fixed_acidity, volatile_acidity, citric_acid, alcohol, type, quality) |>
+  group_by(quality) |>
+  mutate(mean_alcohol = mean(alcohol)) |>
+  mutate(sd_alcohol = sd(alcohol))
+
+total_wine_sub
+
 ```
 
