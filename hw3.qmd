@@ -99,16 +99,20 @@ total_wine_sub
 ## Task 4
 
 ```{r}
+#installing and loading new libraries
 install.packages("RSQLite")
 library(RSQLite)
 library(tidyverse)
 library(DBI)
+
+#setting working directory and the db file
 setwd("C:/Users/davenportjm/Documents/repos")
 con <- dbConnect(RSQLite::SQLite(), "lahman.db")
 
+#checking list of tables in con
 dbListTables(con)
 
-
+#manipulating Teams table and filtering to only year 2015
 tbl(con, "Teams")|>
   filter(yearID == 2015) 
 
@@ -119,6 +123,7 @@ teams_2015 <- tbl(con, sql(
    WHERE yearID = 2015"
 ))
 
+#manipulating and joining 2 tables: Hall of Fame and People
 HOF <- tbl(con, "HallofFame")|>
  select(playerID, yearID, category) 
 
@@ -128,8 +133,10 @@ Name <- tbl(con, "People") |>
 Hall_names <- left_join(HOF, Name, by = "playerID") |>
   collect()
 
+#checking to make sure everything joined properly
 Hall_names
 
+#new table manipulation of managers based on w/l records using code from worksheet for help
 Managers <- tbl(con, "Managers") |>
 select(playerID, G, W, L)|>
 group_by(playerID) |>
@@ -139,10 +146,11 @@ Total_L = sum(L, na.rm = TRUE)) |>
   mutate(`Total_W/G_managed` = as.numeric(Total_W) / as.numeric(G_managed))  |> arrange(desc('Total_W/G_managed')) |>
   collect()
 
-
+#joining the hall names table and managers table to answer how many managers were in hall of fame
 Manage_hall <- inner_join(Hall_names, Managers, by = "playerID") |>
   collect()
 
+#checking to see who meets the criteria for question
 Manage_hall
 
 ```
