@@ -69,6 +69,8 @@ iris |>
 
 # Task 2 Reading Delimited Data
 
+Read the delimited data into R using `read_delim`
+
 ```{r}
 library(tidyverse)
 glass_data <- read_delim("https://www4.stat.ncsu.edu/~online/datasets/glass.data", 
@@ -76,6 +78,8 @@ glass_data <- read_delim("https://www4.stat.ncsu.edu/~online/datasets/glass.data
 
 glass_data
 ```
+
+Create a factor version of the variable that replaces the numbers with string labels
 
 ```{r}
 glass_data |>
@@ -89,6 +93,8 @@ glass_data |>
                                            "tableware",
                                            "headlamps")))
 ```
+
+Keep only observations where the `Fe` variable is less than 0.2 and the `Type_of_Glass` is either “tableware” or “headlamp”
 
 ```{r}
 glass_data |>
@@ -104,6 +110,8 @@ glass_data |>
   filter(Fe < 0.2 & Type_of_Glass %in% c("tableware", "headlamp"))
 ```
 
+Read in the fixed width file containing yeast data
+
 ```{r}
 yeast_data <- read_fwf("https://www4.stat.ncsu.edu/online/datasets/yeast.data",
                        fwf_widths(c(12, 6, 6, 6, 6, 6, 6, 6, 6, 3), 
@@ -111,10 +119,14 @@ yeast_data <- read_fwf("https://www4.stat.ncsu.edu/online/datasets/yeast.data",
 yeast_data
 ```
 
+select all columns apart from `seq_name` and `nuc`
+
 ```{r}
 yeast_data |>
   select(-seq_name, -nuc)
 ```
+
+Find the mean and median, grouped by `class`, of all the numeric variables in the dataset
 
 ```{r}
 yeast_data |>
@@ -125,12 +137,15 @@ yeast_data |>
 
 # Task 3: Combining Excel and Delimited Data
 
+Read in the white wine data
 
 ```{r}
 library(readxl)
 white_wine_data <- read_excel("white-wine.xlsx")
 white_wine_data
 ```
+
+Read in the variable names from the 2nd sheet of the same file. Apply those names to the `white_wine_data`
 
 ```{r}
 column_names_white_wine_data <- read_excel("white-wine.xlsx", 
@@ -141,11 +156,14 @@ colnames(white_wine_data) <- column_names_white_wine_data$Variables
 white_wine_data
 ```
 
+Add a column to the dataset specifying the type of wine
 
 ```{r}
 white_wine_data$wine_type <- "white"
 View(white_wine_data)
 ```
+
+Read in the red wine data
 
 ```{r}
 library(readr)
@@ -153,18 +171,143 @@ red_wine_data <- read_delim("red-wine.csv", delim = ';')
 red_wine_data
 ```
 
+Apply the names from the second sheet of the `white_wine_data` to the `red_wine_data`
+
 ```{r}
 colnames(red_wine_data) <- column_names_white_wine_data$Variables
 red_wine_data
 ```
+
+Add a column to the dataset specifying the type of wine
 
 ```{r}
 red_wine_data$wine_type <- "red"
 View(red_wine_data)
 ```
 
+Join the two wine datasets
 
 ```{r}
+wine_data <- dplyr::bind_rows(white_wine_data, red_wine_data)
+wine_data
+```
 
+Filter out records with `quality > 6.5` or `alcohol < 132`
+
+```{r}
+wine_data |>
+  filter(quality > 6.5, alcohol < 132)
+```
+
+Arrange the data in descending order on `alcohol`
+
+```{r}
+wine_data |>
+  filter(quality > 6.5, alcohol < 132) |>
+  arrange(desc(quality))
+```
+
+Select specific variables to include 
+
+```{r}
+wine_data |>
+  filter(quality > 6.5, alcohol < 132) |>
+  arrange(desc(quality)) |>
+  select(contains("acid"), alcohol, wine_type, quality)
+```
+
+find the mean and sd for alchohol, grouped by `quality`
+
+```{r}
+wine_data |>
+  filter(quality > 6.5, alcohol < 132) |>
+  arrange(desc(quality)) |>
+  select(contains("acid"), alcohol, wine_type, quality) |>
+  group_by(quality) |>
+  mutate(across(alcohol, list(mean = mean, sd = sd), .names = "{.col}_{.fn}"))
+```
+
+
+# Task 4: Database Practice
+
+Connect to the lahman database
+
+```{r}
+library(DBI)
+library(tidyverse)
+
+con <- dbConnect(RSQLite::SQLite(), "lahman.db")
+dbListTables(con)
+```
+
+Return all of the data from the Teams table for the year 2015
+
+```{r}
+teams <- tbl(con, "Teams")
+
+teams |>
+  filter(yearID == 2015)
+```
+
+Do it in SQL now
+
+```{r}
+tbl(con,
+    sql("SELECT * FROM Teams WHERE yearID = 2015"))
+```
+
+Return all of the players in the hall of fame, the year they were voted into the hall of fame, and their
+category 
+
+```{r}
+hof <- tbl(con, "HallOfFame") |>
+  filter(inducted == "Y") |>
+  select(playerID, yearID, category) |>
+  collect()
+
+hof
+```
+
+Combine the table from the previous question with the People table in order to have the nameFirst
+and nameLast names added to what was returned above
+
+```{r}
+people <- tbl(con, "People") |>
+            select(playerID, nameFirst, nameLast) |>
+            collect()
+
+hof <- left_join(hof, people) |>
+       select(nameFirst, nameLast, playerID, yearID, category)
+
+hof
+```
+
+Return only the playerID, G, W, and L columns from the Managers table. Use chaining to complete some other tasks, including determining the overall win/loss records for every hall of fame manager
+
+```{r}
+mgrs <- tbl(con, "Managers") |>
+        select(playerID, G, W, L) |>
+        group_by(playerID) |>
+        summarize(G_managed = sum(G, na.rm = TRUE),
+                  Total_W = sum(W, na.rm = TRUE),
+                  Total_L = sum(L, na.rm = TRUE)) |>
+        collect() |>
+        mutate(career_wl = Total_W/G_managed) |>
+        arrange(desc(career_wl))
+
+mgrs
+```
+
+Return information for only the people that managed a team and were inducted into the hall of fame
+
+```{r}
+hof_mgrs <- inner_join(mgrs, hof) |>
+            select(playerID, nameFirst, nameLast, yearID,
+                   category, G_managed, Total_W, Total_L, career_wl)
+
+# close the db connection
+dbDisconnect(con)
+
+hof_mgrs
 ```
 
