@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ST 558 Homework 3</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dfb324f25d9b1687192fa8be62ac8f9c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#task-1-conceptual-questions" id="toc-task-1-conceptual-questions" class="nav-link active" data-scroll-target="#task-1-conceptual-questions">Task 1: Conceptual Questions</a></li>
+  <li><a href="#task-2-reading-delimited-data" id="toc-task-2-reading-delimited-data" class="nav-link" data-scroll-target="#task-2-reading-delimited-data">Task 2: Reading Delimited Data</a>
+  <ul class="collapse">
+  <li><a href="#glass-data" id="toc-glass-data" class="nav-link" data-scroll-target="#glass-data">Glass Data</a></li>
+  <li><a href="#yeast-data" id="toc-yeast-data" class="nav-link" data-scroll-target="#yeast-data">Yeast Data</a></li>
+  </ul></li>
+  <li><a href="#task-3-joining-data" id="toc-task-3-joining-data" class="nav-link" data-scroll-target="#task-3-joining-data">Task 3: Joining Data</a></li>
+  <li><a href="#task-4-database-practice" id="toc-task-4-database-practice" class="nav-link" data-scroll-target="#task-4-database-practice">Task 4: Database Practice</a>
+  <ul class="collapse">
+  <li><a href="#hall-of-fame-players" id="toc-hall-of-fame-players" class="nav-link" data-scroll-target="#hall-of-fame-players">Hall of Fame Players</a></li>
+  <li><a href="#manager-statistics" id="toc-manager-statistics" class="nav-link" data-scroll-target="#manager-statistics">Manager Statistics</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">ST 558 Homework 3</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="task-1-conceptual-questions" class="level2">
+<h2 class="anchored" data-anchor-id="task-1-conceptual-questions">Task 1: Conceptual Questions</h2>
+<ol type="1">
+<li>You should specify the path: <code>"../MyData.csv"</code>. The <code>..</code> tells R to move up one level out of the current folder <code>homework/</code> and into the parent folder <code>myfolder/</code>.</li>
+<li>Using R projects increases the <strong>“portability”</strong> of your work by keeping necessary files in a common directory for use with version control software or sharing with collaborators</li>
+<li><strong>Git</strong> is a version control system that tracks changes to files over time. It allows you to:</li>
+</ol>
+<ul>
+<li>Save snapshots of your work (commits)</li>
+<li>View the history of changes</li>
+<li>Revert to previous versions if something goes wrong</li>
+<li>Work on different features independently using branches</li>
+<li>Merge changes from multiple contributors</li>
+</ul>
+<p><strong>GitHub</strong> is a cloud-based platform that hosts Git repositories online. It allows you to:</p>
+<ul>
+<li>Store and back up your Git repositories</li>
+<li>Collaborate with others on projects</li>
+<li>Share code publicly or privately</li>
+<li>Review changes through pull requests</li>
+<li>Track issues and manage projects</li>
+</ul>
+<ol start="4" type="1">
+<li>Tibbles:
+<ol type="1">
+<li><strong>Print nicer</strong> than data frames</li>
+<li>Do not <strong>simplify to a vector</strong> when a single column is referenced</li>
+</ol></li>
+<li>Here’s the same code with chaining:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shut up tidyverse</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(tidyverse))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(iris) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"Petal"</span>), Species) <span class="sc">|&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Petal.Length <span class="sc">&lt;</span> <span class="fl">1.55</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Species) <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  Petal.Length Petal.Width Species
+         &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+1          1.4         0.2 setosa 
+2          1.4         0.2 setosa 
+3          1.3         0.2 setosa 
+4          1.5         0.2 setosa 
+5          1.4         0.2 setosa 
+6          1.4         0.3 setosa </code></pre>
+</div>
+</div>
+<ol start="6" type="1">
+<li>Long format data has multiple rows for a single record, with one column holding variable names and another holding the values. Wide format data has all variables and repeated measurements for a single observational unit spread across a single row. For most statistical analyses, we generally prefer long format data because it is easier to work with and is compatible with many statistical modeling and visualization functions.</li>
+</ol>
+</section>
+<section id="task-2-reading-delimited-data" class="level2">
+<h2 class="anchored" data-anchor-id="task-2-reading-delimited-data">Task 2: Reading Delimited Data</h2>
+<section id="glass-data" class="level3">
+<h3 class="anchored" data-anchor-id="glass-data">Glass Data</h3>
+<p>We’ll start by reading in the <code>glass.csv</code> file:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>glass_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"ri"</span>, <span class="st">"na"</span>, <span class="st">"mg"</span>, <span class="st">"al"</span>, <span class="st">"si"</span>, <span class="st">"k"</span>, <span class="st">"ca"</span>, <span class="st">"ba"</span>, <span class="st">"fe"</span>, <span class="st">"type"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>glass <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://www4.stat.ncsu.edu/online/datasets/glass.data"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">col_names =</span> glass_names,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>glass</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 214 × 11
+      id    ri    na    mg    al    si     k    ca    ba    fe  type
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1     1  1.52  13.6  4.49  1.1   71.8  0.06  8.75     0  0        1
+ 2     2  1.52  13.9  3.6   1.36  72.7  0.48  7.83     0  0        1
+ 3     3  1.52  13.5  3.55  1.54  73.0  0.39  7.78     0  0        1
+ 4     4  1.52  13.2  3.69  1.29  72.6  0.57  8.22     0  0        1
+ 5     5  1.52  13.3  3.62  1.24  73.1  0.55  8.07     0  0        1
+ 6     6  1.52  12.8  3.61  1.62  73.0  0.64  8.07     0  0.26     1
+ 7     7  1.52  13.3  3.6   1.14  73.1  0.58  8.17     0  0        1
+ 8     8  1.52  13.2  3.61  1.05  73.2  0.57  8.24     0  0        1
+ 9     9  1.52  14.0  3.58  1.37  72.1  0.56  8.3      0  0        1
+10    10  1.52  13    3.6   1.36  73.0  0.57  8.4      0  0.11     1
+# ℹ 204 more rows</code></pre>
+</div>
+</div>
+<p>Our tibble looks good, but we need to recode our <code>type</code> variable.</p>
+<p>I wanted to use a switch statement to recode the levels, but those don’t work inside of <code>mutate</code> for some reason. I found <code>case_match</code> in the <code>dplyr</code> documentation as a vectorized alternative so we’re using it here.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>glass <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(glass, <span class="at">type =</span> <span class="fu">factor</span>(type,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"building_windows_float_processed"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"building_windows_non_float_processed"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"vehicle_windows_float_processed"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"vehicle_windows_non_float_processed"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"containers"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"tableware"</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                                         <span class="st">"headlamps"</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">filter</span>(fe <span class="sc">&lt;</span> <span class="fl">0.2</span>, type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"tableware"</span>, <span class="st">"headlamps"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 38 × 11
+      id    ri    na    mg    al    si     k    ca    ba    fe type     
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    
+ 1   177  1.52  14    2.39  1.56  72.4  0     9.57  0        0 tableware
+ 2   178  1.52  13.8  2.41  1.19  72.8  0     9.77  0        0 tableware
+ 3   179  1.52  14.5  2.24  1.62  72.4  0     9.26  0        0 tableware
+ 4   180  1.52  14.1  2.19  1.66  72.7  0     9.32  0        0 tableware
+ 5   181  1.51  14.4  1.74  1.54  74.6  0     7.59  0        0 tableware
+ 6   182  1.52  15.0  0.78  1.74  72.5  0     9.95  0        0 tableware
+ 7   183  1.52  14.2  0     2.09  72.7  0    10.9   0        0 tableware
+ 8   184  1.52  14.6  0     0.56  73.5  0    11.2   0        0 tableware
+ 9   185  1.51  17.4  0     0.34  75.4  0     6.65  0        0 tableware
+10   186  1.51  13.7  3.2   1.81  72.8  1.76  5.43  1.19     0 headlamps
+# ℹ 28 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="yeast-data" class="level3">
+<h3 class="anchored" data-anchor-id="yeast-data">Yeast Data</h3>
+<p>Start by reading in the fixed-width data as shown in the video:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>yeast_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"seq_name"</span>, <span class="st">"meg"</span>, <span class="st">"gvh"</span>, <span class="st">"alm"</span>, <span class="st">"mit"</span>, <span class="st">"erl"</span>, <span class="st">"pox"</span>, <span class="st">"vac"</span>, <span class="st">"nuc"</span>, <span class="st">"class"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>yeast <span class="ot">&lt;-</span> <span class="fu">read_fwf</span>(<span class="st">"https://www4.stat.ncsu.edu/online/datasets/yeast.data"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">col_positions =</span> <span class="fu">fwf_widths</span>(<span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">3</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">col_names =</span> yeast_names),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>yeast</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,484 × 10
+   seq_name     meg   gvh   alm   mit   erl   pox   vac   nuc class
+   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+ 1 ADT1_YEAST  0.58  0.61  0.47  0.13   0.5   0    0.48  0.22 MIT  
+ 2 ADT2_YEAST  0.43  0.67  0.48  0.27   0.5   0    0.53  0.22 MIT  
+ 3 ADT3_YEAST  0.64  0.62  0.49  0.15   0.5   0    0.53  0.22 MIT  
+ 4 AAR2_YEAST  0.58  0.44  0.57  0.13   0.5   0    0.54  0.22 NUC  
+ 5 AATM_YEAST  0.42  0.44  0.48  0.54   0.5   0    0.48  0.22 MIT  
+ 6 AATC_YEAST  0.51  0.4   0.56  0.17   0.5   0.5  0.49  0.22 CYT  
+ 7 ABC1_YEAST  0.5   0.54  0.48  0.65   0.5   0    0.53  0.22 MIT  
+ 8 BAF1_YEAST  0.48  0.45  0.59  0.2    0.5   0    0.58  0.34 NUC  
+ 9 ABF2_YEAST  0.55  0.5   0.66  0.36   0.5   0    0.49  0.22 MIT  
+10 ABP1_YEAST  0.4   0.39  0.6   0.15   0.5   0    0.58  0.3  CYT  
+# ℹ 1,474 more rows</code></pre>
+</div>
+</div>
+<p>Now we can subset the columns and create the summaries. I’m barely changing the code from the video:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>yeast_sub <span class="ot">&lt;-</span> yeast <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">"seq_name"</span>, <span class="st">"nuc"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">group_by</span>(class) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="fu">list</span>(<span class="at">mean =</span> mean, <span class="at">median =</span> median),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">.names =</span> <span class="st">"{.col}_{.fn}"</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>yeast_sub</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,484 × 22
+# Groups:   class [10]
+     meg   gvh   alm   mit   erl   pox   vac class meg_mean meg_median gvh_mean
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt;
+ 1  0.58  0.61  0.47  0.13   0.5   0    0.48 MIT      0.521       0.51    0.533
+ 2  0.43  0.67  0.48  0.27   0.5   0    0.53 MIT      0.521       0.51    0.533
+ 3  0.64  0.62  0.49  0.15   0.5   0    0.53 MIT      0.521       0.51    0.533
+ 4  0.58  0.44  0.57  0.13   0.5   0    0.54 NUC      0.452       0.45    0.456
+ 5  0.42  0.44  0.48  0.54   0.5   0    0.48 MIT      0.521       0.51    0.533
+ 6  0.51  0.4   0.56  0.17   0.5   0.5  0.49 CYT      0.481       0.48    0.470
+ 7  0.5   0.54  0.48  0.65   0.5   0    0.53 MIT      0.521       0.51    0.533
+ 8  0.48  0.45  0.59  0.2    0.5   0    0.58 NUC      0.452       0.45    0.456
+ 9  0.55  0.5   0.66  0.36   0.5   0    0.49 MIT      0.521       0.51    0.533
+10  0.4   0.39  0.6   0.15   0.5   0    0.58 CYT      0.481       0.48    0.470
+# ℹ 1,474 more rows
+# ℹ 11 more variables: gvh_median &lt;dbl&gt;, alm_mean &lt;dbl&gt;, alm_median &lt;dbl&gt;,
+#   mit_mean &lt;dbl&gt;, mit_median &lt;dbl&gt;, erl_mean &lt;dbl&gt;, erl_median &lt;dbl&gt;,
+#   pox_mean &lt;dbl&gt;, pox_median &lt;dbl&gt;, vac_mean &lt;dbl&gt;, vac_median &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Great, we have our summary columns for each variable grouped by the class.</p>
+</section>
+</section>
+<section id="task-3-joining-data" class="level2">
+<h2 class="anchored" data-anchor-id="task-3-joining-data">Task 3: Joining Data</h2>
+<p>We start by importing the wine data from the first sheet of the excel workbook we’re provided:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>white_wine <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"white-wine.xlsx"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">sheet =</span> <span class="dv">1</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>white_wine</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,898 × 12
+   `fixed acidity` `volatile acidity` `citric acid` `residual sugar` chlorides
+             &lt;dbl&gt;              &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;
+ 1               7               0.27          0.36             20.7     0.045
+ 2              63               0.3           0.34              1.6     0.049
+ 3              81               0.28          0.4               6.9     0.05 
+ 4              72               0.23          0.32              8.5     0.058
+ 5              72               0.23          0.32              8.5     0.058
+ 6              81               0.28          0.4               6.9     0.05 
+ 7              62               0.32          0.16              7       0.045
+ 8               7               0.27          0.36             20.7     0.045
+ 9              63               0.3           0.34              1.6     0.049
+10              81               0.22          0.43              1.5     0.044
+# ℹ 4,888 more rows
+# ℹ 7 more variables: `free sulfur dioxide` &lt;dbl&gt;,
+#   `total sulfur dioxide` &lt;dbl&gt;, density &lt;dbl&gt;, pH &lt;dbl&gt;, sulphates &lt;dbl&gt;,
+#   alcohol &lt;dbl&gt;, quality &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>We don’t want variable names with spaces in them. Let’s pull better names from the second sheet and replace these weird ones.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>wine_names <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"white-wine.xlsx"</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">sheet =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">pull</span>()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(white_wine) <span class="ot">&lt;-</span> wine_names</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>white_wine</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,898 × 12
+   fixed_acidity volatile_acidity citric_acid residual_sugar chlorides
+           &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+ 1             7             0.27        0.36           20.7     0.045
+ 2            63             0.3         0.34            1.6     0.049
+ 3            81             0.28        0.4             6.9     0.05 
+ 4            72             0.23        0.32            8.5     0.058
+ 5            72             0.23        0.32            8.5     0.058
+ 6            81             0.28        0.4             6.9     0.05 
+ 7            62             0.32        0.16            7       0.045
+ 8             7             0.27        0.36           20.7     0.045
+ 9            63             0.3         0.34            1.6     0.049
+10            81             0.22        0.43            1.5     0.044
+# ℹ 4,888 more rows
+# ℹ 7 more variables: free_sulfur_dioxide &lt;dbl&gt;, total_sulfur_dioxide &lt;dbl&gt;,
+#   density &lt;dbl&gt;, pH &lt;dbl&gt;, sulphates &lt;dbl&gt;, alcohol &lt;dbl&gt;, quality &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Great! We just need to add the type of wine to each observation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>white_wine<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"White"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># preview</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>white_wine[,<span class="dv">10</span><span class="sc">:</span><span class="dv">13</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,898 × 4
+   sulphates alcohol quality type 
+       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;
+ 1      0.45      88       6 White
+ 2      0.49      95       6 White
+ 3      0.44     101       6 White
+ 4      0.4       99       6 White
+ 5      0.4       99       6 White
+ 6      0.44     101       6 White
+ 7      0.47      96       6 White
+ 8      0.45      88       6 White
+ 9      0.49      95       6 White
+10      0.45      11       6 White
+# ℹ 4,888 more rows</code></pre>
+</div>
+</div>
+<p>Now that the white wine data is complete, we can turn our attention to the reds:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>red_wine <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"https://www4.stat.ncsu.edu/~online/datasets/red-wine.csv"</span>,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">skip =</span> <span class="dv">1</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">delim =</span> <span class="st">";"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">col_names =</span> wine_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1599 Columns: 12
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ";"
+dbl (12): fixed_acidity, volatile_acidity, citric_acid, residual_sugar, chlo...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>red_wine<span class="sc">$</span>type <span class="ot">&lt;-</span> <span class="st">"red"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>red_wine</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,599 × 13
+   fixed_acidity volatile_acidity citric_acid residual_sugar chlorides
+           &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+ 1           7.4             0.7         0               1.9     0.076
+ 2           7.8             0.88        0               2.6     0.098
+ 3           7.8             0.76        0.04            2.3     0.092
+ 4          11.2             0.28        0.56            1.9     0.075
+ 5           7.4             0.7         0               1.9     0.076
+ 6           7.4             0.66        0               1.8     0.075
+ 7           7.9             0.6         0.06            1.6     0.069
+ 8           7.3             0.65        0               1.2     0.065
+ 9           7.8             0.58        0.02            2       0.073
+10           7.5             0.5         0.36            6.1     0.071
+# ℹ 1,589 more rows
+# ℹ 8 more variables: free_sulfur_dioxide &lt;dbl&gt;, total_sulfur_dioxide &lt;dbl&gt;,
+#   density &lt;dbl&gt;, pH &lt;dbl&gt;, sulphates &lt;dbl&gt;, alcohol &lt;dbl&gt;, quality &lt;dbl&gt;,
+#   type &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>Perfect! With the correct column types and names, it’s easy to merge our two data sets:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>wine <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(white_wine, red_wine)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>wine</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6,497 × 13
+   fixed_acidity volatile_acidity citric_acid residual_sugar chlorides
+           &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+ 1             7             0.27        0.36           20.7     0.045
+ 2            63             0.3         0.34            1.6     0.049
+ 3            81             0.28        0.4             6.9     0.05 
+ 4            72             0.23        0.32            8.5     0.058
+ 5            72             0.23        0.32            8.5     0.058
+ 6            81             0.28        0.4             6.9     0.05 
+ 7            62             0.32        0.16            7       0.045
+ 8             7             0.27        0.36           20.7     0.045
+ 9            63             0.3         0.34            1.6     0.049
+10            81             0.22        0.43            1.5     0.044
+# ℹ 6,487 more rows
+# ℹ 8 more variables: free_sulfur_dioxide &lt;dbl&gt;, total_sulfur_dioxide &lt;dbl&gt;,
+#   density &lt;dbl&gt;, pH &lt;dbl&gt;, sulphates &lt;dbl&gt;, alcohol &lt;dbl&gt;, quality &lt;dbl&gt;,
+#   type &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>Lastly, we’ll make a pipeline using the combined data set:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>wine <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(quality <span class="sc">&gt;</span> <span class="fl">6.5</span>, alcohol <span class="sc">&lt;</span> <span class="dv">132</span>) <span class="sc">|&gt;</span> <span class="co"># only 6.5+ quality, less than 132 alcohol</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(quality)) <span class="sc">|&gt;</span>                         <span class="co"># arrange in desc quality order</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"acid"</span>), alcohol, type, quality) <span class="sc">|&gt;</span>      <span class="co"># subset columns</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(quality) <span class="sc">|&gt;</span>                                    <span class="co"># group by quality</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(alcohol, <span class="fu">list</span>(<span class="at">mean =</span> mean, <span class="at">sd =</span> sd),    <span class="co"># add alcohol mean/sd columns</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">.names =</span> <span class="st">"{.fn}_alcohol"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,206 × 8
+# Groups:   quality [3]
+   fixed_acidity volatile_acidity citric_acid alcohol type  quality mean_alcohol
+           &lt;dbl&gt;            &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;        &lt;dbl&gt;
+ 1            91             0.27        0.45     104 White       9        122. 
+ 2            66             0.36        0.29     124 White       9        122. 
+ 3            74             0.24        0.36     125 White       9        122. 
+ 4            69             0.36        0.34     127 White       9        122. 
+ 5            71             0.26        0.49     129 White       9        122. 
+ 6            62             0.66        0.48     128 White       8         94.1
+ 7            62             0.66        0.48     128 White       8         94.1
+ 8            68             0.26        0.42     105 White       8         94.1
+ 9            67             0.23        0.31     107 White       8         94.1
+10            67             0.23        0.31     107 White       8         94.1
+# ℹ 1,196 more rows
+# ℹ 1 more variable: sd_alcohol &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="task-4-database-practice" class="level2">
+<h2 class="anchored" data-anchor-id="task-4-database-practice">Task 4: Database Practice</h2>
+<p>Connecting to the <code>lahman</code> database is quite easy:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DBI)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>lahman <span class="ot">&lt;-</span> <span class="fu">dbConnect</span>(RSQLite<span class="sc">::</span><span class="fu">SQLite</span>(), <span class="st">"lahman.db"</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dbListTables</span>(lahman)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "AllstarFull"         "Appearances"         "AwardsManagers"     
+ [4] "AwardsPlayers"       "AwardsShareManagers" "AwardsSharePlayers" 
+ [7] "Batting"             "BattingPost"         "CollegePlaying"     
+[10] "Fielding"            "FieldingOF"          "FieldingOFsplit"    
+[13] "FieldingPost"        "HallOfFame"          "HomeGames"          
+[16] "LahmanData"          "Managers"            "ManagersHalf"       
+[19] "Parks"               "People"              "Pitching"           
+[22] "PitchingPost"        "Salaries"            "Schools"            
+[25] "SeriesPost"          "Teams"               "TeamsFranchises"    
+[28] "TeamsHalf"           "battingLabels"       "fieldingLabels"     
+[31] "pitchingLabels"     </code></pre>
+</div>
+</div>
+<p>There are a lot of tables within this database!</p>
+<p>We start by querying the <code>Teams</code> table and returning observations from the year 2015:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>data_2015 <span class="ot">&lt;-</span> <span class="fu">tbl</span>(lahman, <span class="st">"Teams"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>               <span class="fu">filter</span>(yearID <span class="sc">==</span> <span class="dv">2015</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">collect</span>()</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>data_2015</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 × 48
+   yearID lgID  teamID franchID divID  Rank     G Ghome     W     L DivWin WCWin
+    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;
+ 1   2015 NL    ARI    ARI      W         3   162    81    79    83 N      N    
+ 2   2015 NL    ATL    ATL      E         4   162    81    67    95 N      N    
+ 3   2015 AL    BAL    BAL      E         3   162    78    81    81 N      N    
+ 4   2015 AL    BOS    BOS      E         5   162    81    78    84 N      N    
+ 5   2015 AL    CHA    CHW      C         4   162    81    76    86 N      N    
+ 6   2015 NL    CHN    CHC      C         3   162    81    97    65 N      Y    
+ 7   2015 NL    CIN    CIN      C         5   162    81    64    98 N      N    
+ 8   2015 AL    CLE    CLE      C         3   161    80    81    80 N      N    
+ 9   2015 NL    COL    COL      W         5   162    81    68    94 N      N    
+10   2015 AL    DET    DET      C         5   161    81    74    87 N      N    
+# ℹ 20 more rows
+# ℹ 36 more variables: LgWin &lt;chr&gt;, WSWin &lt;chr&gt;, R &lt;int&gt;, AB &lt;int&gt;, H &lt;int&gt;,
+#   X2B &lt;int&gt;, X3B &lt;int&gt;, HR &lt;int&gt;, BB &lt;int&gt;, SO &lt;int&gt;, SB &lt;int&gt;, CS &lt;int&gt;,
+#   HBP &lt;int&gt;, SF &lt;int&gt;, RA &lt;int&gt;, ER &lt;int&gt;, ERA &lt;dbl&gt;, CG &lt;int&gt;, SHO &lt;int&gt;,
+#   SV &lt;int&gt;, IPouts &lt;int&gt;, HA &lt;int&gt;, HRA &lt;int&gt;, BBA &lt;int&gt;, SOA &lt;int&gt;, E &lt;int&gt;,
+#   DP &lt;int&gt;, FP &lt;dbl&gt;, name &lt;chr&gt;, park &lt;chr&gt;, attendance &lt;int&gt;, BPF &lt;int&gt;,
+#   PPF &lt;int&gt;, teamIDBR &lt;chr&gt;, teamIDlahman45 &lt;chr&gt;, teamIDretro &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>We can do the same thing using SQL commands instead:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>data_2015_frmsql <span class="ot">&lt;-</span> <span class="fu">tbl</span>(lahman, <span class="fu">sql</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"SELECT *</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="st">                           FROM `Teams`</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">                           WHERE (`yearID` = 2015)"</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>                        )) <span class="sc">|&gt;</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">collect</span>()</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>data_2015_frmsql</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 × 48
+   yearID lgID  teamID franchID divID  Rank     G Ghome     W     L DivWin WCWin
+    &lt;int&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;  &lt;chr&gt;
+ 1   2015 NL    ARI    ARI      W         3   162    81    79    83 N      N    
+ 2   2015 NL    ATL    ATL      E         4   162    81    67    95 N      N    
+ 3   2015 AL    BAL    BAL      E         3   162    78    81    81 N      N    
+ 4   2015 AL    BOS    BOS      E         5   162    81    78    84 N      N    
+ 5   2015 AL    CHA    CHW      C         4   162    81    76    86 N      N    
+ 6   2015 NL    CHN    CHC      C         3   162    81    97    65 N      Y    
+ 7   2015 NL    CIN    CIN      C         5   162    81    64    98 N      N    
+ 8   2015 AL    CLE    CLE      C         3   161    80    81    80 N      N    
+ 9   2015 NL    COL    COL      W         5   162    81    68    94 N      N    
+10   2015 AL    DET    DET      C         5   161    81    74    87 N      N    
+# ℹ 20 more rows
+# ℹ 36 more variables: LgWin &lt;chr&gt;, WSWin &lt;chr&gt;, R &lt;int&gt;, AB &lt;int&gt;, H &lt;int&gt;,
+#   X2B &lt;int&gt;, X3B &lt;int&gt;, HR &lt;int&gt;, BB &lt;int&gt;, SO &lt;int&gt;, SB &lt;int&gt;, CS &lt;int&gt;,
+#   HBP &lt;int&gt;, SF &lt;int&gt;, RA &lt;int&gt;, ER &lt;int&gt;, ERA &lt;dbl&gt;, CG &lt;int&gt;, SHO &lt;int&gt;,
+#   SV &lt;int&gt;, IPouts &lt;int&gt;, HA &lt;int&gt;, HRA &lt;int&gt;, BBA &lt;int&gt;, SOA &lt;int&gt;, E &lt;int&gt;,
+#   DP &lt;int&gt;, FP &lt;dbl&gt;, name &lt;chr&gt;, park &lt;chr&gt;, attendance &lt;int&gt;, BPF &lt;int&gt;,
+#   PPF &lt;int&gt;, teamIDBR &lt;chr&gt;, teamIDlahman45 &lt;chr&gt;, teamIDretro &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>This is the same table from above, so it looks like I still remember how to write SQL! I’m going to use the dplyr workflow going forward because I’m more comfortable with it.</p>
+<section id="hall-of-fame-players" class="level3">
+<h3 class="anchored" data-anchor-id="hall-of-fame-players">Hall of Fame Players</h3>
+<p>Here we’re taking a look at the <code>HallOfFame</code> table and doing some wrangling:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>hof <span class="ot">&lt;-</span> <span class="fu">tbl</span>(lahman, <span class="st">"HallOfFame"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(inducted <span class="sc">==</span> <span class="st">"Y"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>         <span class="fu">select</span>(playerID, yearID, category) <span class="sc">|&gt;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>         <span class="fu">collect</span>()</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>hof</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 340 × 3
+   playerID  yearID category         
+   &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;            
+ 1 cobbty01    1936 Player           
+ 2 ruthba01    1936 Player           
+ 3 wagneho01   1936 Player           
+ 4 mathech01   1936 Player           
+ 5 johnswa01   1936 Player           
+ 6 lajoina01   1937 Player           
+ 7 speaktr01   1937 Player           
+ 8 youngcy01   1937 Player           
+ 9 bulkemo99   1937 Pioneer/Executive
+10 johnsba99   1937 Pioneer/Executive
+# ℹ 330 more rows</code></pre>
+</div>
+</div>
+<p>Next, we use the <code>playerID</code> key variable to left join the <code>hof</code> and <code>people</code> data sets so we have the first and last name for each player.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>people <span class="ot">&lt;-</span> <span class="fu">tbl</span>(lahman, <span class="st">"People"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(playerID, nameFirst, nameLast) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">collect</span>()</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>hof <span class="ot">&lt;-</span> <span class="fu">left_join</span>(hof, people) <span class="sc">|&gt;</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>       <span class="fu">select</span>(nameFirst, nameLast, playerID, yearID, category)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(playerID)`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>hof</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 340 × 5
+   nameFirst nameLast  playerID  yearID category         
+   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;      &lt;int&gt; &lt;chr&gt;            
+ 1 Ty        Cobb      cobbty01    1936 Player           
+ 2 Babe      Ruth      ruthba01    1936 Player           
+ 3 Honus     Wagner    wagneho01   1936 Player           
+ 4 Christy   Mathewson mathech01   1936 Player           
+ 5 Walter    Johnson   johnswa01   1936 Player           
+ 6 Nap       Lajoie    lajoina01   1937 Player           
+ 7 Tris      Speaker   speaktr01   1937 Player           
+ 8 Cy        Young     youngcy01   1937 Player           
+ 9 Morgan    Bulkeley  bulkemo99   1937 Pioneer/Executive
+10 Ban       Johnson   johnsba99   1937 Pioneer/Executive
+# ℹ 330 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="manager-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="manager-statistics">Manager Statistics</h3>
+<p>We’re now focusing our attention on the <code>Managers</code> table:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>mgrs <span class="ot">&lt;-</span> <span class="fu">tbl</span>(lahman, <span class="st">"Managers"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(playerID, G, W, L) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(playerID) <span class="sc">|&gt;</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarize</span>(<span class="at">G_managed =</span> <span class="fu">sum</span>(G, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Total_W =</span> <span class="fu">sum</span>(W, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Total_L =</span> <span class="fu">sum</span>(L, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">collect</span>() <span class="sc">|&gt;</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">career_wl =</span> Total_W<span class="sc">/</span>G_managed) <span class="sc">|&gt;</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">arrange</span>(<span class="fu">desc</span>(career_wl))</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>mgrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 749 × 5
+   playerID  G_managed Total_W Total_L career_wl
+   &lt;chr&gt;         &lt;int&gt;   &lt;int&gt;   &lt;int&gt;     &lt;dbl&gt;
+ 1 bensove01         1       1       0         1
+ 2 burwebi01         1       1       0         1
+ 3 cohenan01         1       1       0         1
+ 4 ebeldi99          3       3       0         1
+ 5 falkbi01          1       1       0         1
+ 6 hardeme01         3       3       0         1
+ 7 simmote01         1       1       0         1
+ 8 steinte01         2       2       0         1
+ 9 sukefcl01         2       2       0         1
+10 tamarjo01         1       1       0         1
+# ℹ 739 more rows</code></pre>
+</div>
+</div>
+<p>Unsurprisingly, the highest career win/loss stats are held by managers who managed a few games to victory.</p>
+<p>Lastly, we join the <code>hof</code> and <code>mgrs</code> tables by <code>playerID</code> to return all Hall of Fame members who managed games at some point in their career. I’m also reordering the columns so the order is more useful.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>hof_mgrs <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(mgrs, hof) <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">select</span>(playerID, nameFirst, nameLast, yearID,</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                   category, G_managed, Total_W, Total_L, career_wl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining with `by = join_by(playerID)`</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># be a good egg and close the db connection</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbDisconnect</span>(lahman)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>hof_mgrs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 97 × 9
+   playerID  nameFirst nameLast   yearID category      G_managed Total_W Total_L
+   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;int&gt; &lt;chr&gt;             &lt;int&gt;   &lt;int&gt;   &lt;int&gt;
+ 1 simmote01 Ted       Simmons      2020 Player                1       1       0
+ 2 wrighge01 George    Wright       1937 Pioneer/Exec…        85      59      25
+ 3 spaldal01 Al        Spalding     1939 Pioneer/Exec…       126      78      47
+ 4 mccarjo99 Joe       McCarthy     1957 Manager            3487    2125    1333
+ 5 comisch01 Charlie   Comiskey     1939 Pioneer/Exec…      1410     840     541
+ 6 southbi01 Billy     Southworth   2008 Manager            1770    1044     704
+ 7 seleefr99 Frank     Selee        1999 Manager            2180    1284     862
+ 8 chancfr01 Frank     Chance       1946 Player             1622     946     648
+ 9 weaveea99 Earl      Weaver       1996 Manager            2541    1480    1060
+10 lopezal01 Al        Lopez        1977 Manager            2425    1410    1004
+# ℹ 87 more rows
+# ℹ 1 more variable: career_wl &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Great! This table contains every person inducted into the Hall of Fame who managed at least one game.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
